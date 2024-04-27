@@ -4,34 +4,39 @@ import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import ErrorMessage from "../components/Error";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function Login({ navigation }) {
+export default function ValidateOTP({ navigation }) {
   const { API_URL } = process.env;
-  const [phone, setPhone] = useState("");
+  const [otp, setOTP] = useState("");
   const [error, setError] = useState({
     visible: false,
     message: "",
   });
 
-  const sendOTP = async () => {
-    if (phone.length !== 10) {
+  const validateOTP = async () => {
+    if (otp.length !== 4) {
       setError({
         visible: true,
-        message: "Please enter a valid phone number",
+        message: "Please enter a valid OTP",
       });
       return;
     }
-    await AsyncStorage.setItem("user-phone", phone);
+    const phone = await AsyncStorage.getItem("user-phone");
     axios
-      .post(`${API_URL}/auth/getOTP/${phone}`)
+      .post(`${API_URL}/auth/validateOTP/${phone}&&${otp}`)
       .then((res) => {
-        if (res.status === 200) navigation.navigate("Validate");
+        AsyncStorage.removeItem("user-phone").then(() => {
+          if (res.status === 200) navigation.navigate("Home");
+        });
       })
       .catch((err) => {
-        setError({
-          visible: true,
-          message: "An error has occured, please try again later",
-        });
-        console.error(err);
+        if (err.status === 401) {
+          setError({
+            visible: true,
+            message: "Invalid OTP",
+          });
+        } else {
+          console.error(err);
+        }
       });
   };
 
@@ -56,16 +61,16 @@ export default function Login({ navigation }) {
       />
       <TextInput
         className='px-2 py-1 border border-slate-300 rounded-md w-2/3'
-        value={phone}
-        placeholder='Enter your phone'
+        value={otp}
+        placeholder='Enter your OTP'
         keyboardType='number-pad'
-        onChangeText={setPhone}
+        onChangeText={setOTP}
       />
       {error.visible && <ErrorMessage message={error.message} />}
       <TouchableOpacity
-        onPress={sendOTP}
+        onPress={validateOTP}
         className='bg-slate-700 p-2 rounded-md w-1/3'>
-        <Text className='text-white text-center'>Get OTP</Text>
+        <Text className='text-white text-center'>Verify OTP</Text>
       </TouchableOpacity>
     </View>
   );
