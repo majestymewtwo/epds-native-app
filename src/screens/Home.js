@@ -9,10 +9,6 @@ export default function Home({ navigation }) {
     });
   }, []);
 
-  const goToLogin = () => {
-    navigation.navigate("Login");
-  };
-
   const logOut = () => {
     AsyncStorage.removeItem("token").then(() => {
       navigation.navigate("Login");
