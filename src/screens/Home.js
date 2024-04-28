@@ -8,12 +8,6 @@ import UserStats from "../components/UserStats";
 import Navbar from "../components/Navbar";
 
 export default function Home({ navigation }) {
-  useEffect(() => {
-    AsyncStorage.getItem("token").then((token) => {
-      console.log(token);
-    });
-  }, []);
-
   return (
     <View className='flex-1 items-center justify-between bg-white min-h-screen'>
       <Header />

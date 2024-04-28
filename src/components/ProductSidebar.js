@@ -1,20 +1,46 @@
 import React from "react";
-import { ScrollView, View, Text, TouchableOpacity , Image} from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 
-const categories = ["Grains", "Dairy", "Fruits", "Veggies", "Others"];
+const categories = [
+  {
+    image: require("../../assets/grains.jpg"),
+    name: "Grains",
+  },
+  {
+    image: require("../../assets/dairy.jpg"),
+    name: "Dairy",
+  },
+  {
+    image: require("../../assets/fruits.jpeg"),
+    name: "Fruits",
+  },
+  {
+    image: require("../../assets/veggies.jpg"),
+    name: "Veggies",
+  },
+  {
+    image: require("../../assets/others.png"),
+    name: "Others",
+  },
+];
 
 const Sidebar = () => {
   return (
-    <View className="w-1/4 bg-gray-100 p-2">
-      <Text className="text-sm font-bold mb-2 w-full text-center">Categories</Text>
+    <View className='w-1/4 bg-gray-100 p-2'>
+      <Text className='text-sm font-bold mb-2 w-full text-center'>
+        Categories
+      </Text>
       {categories.map((category, index) => (
-        <TouchableOpacity key={index} className="mb-[5px] py-4">
+        <View key={index} className='mb-2'>
+          <View className='rounded-full overflow-hidden h-20 w-20 bg-black'>
             <Image
-        source={{ uri: "img" }}
-        style={{ width: "100%", height: 57, resizeMode: "contain" }}
-      />
-          <Text className="text-md text-center w-full">{category}</Text>
-        </TouchableOpacity>
+              source={category.image}
+              resizeMode='cover'
+              className='w-full h-full'
+            />
+          </View>
+          <Text className='text-md text-center w-full'>{category.name}</Text>
+        </View>
       ))}
     </View>
   );

@@ -1,33 +1,71 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ProductCard from "../components/ProductCard";
-import Sidebar from "../components/ProductSidebar"; 
+import Sidebar from "../components/ProductSidebar";
+import { useIsFocused } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 const ProductsPage = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [products, setProducts] = useState([]);
+  const isFocused = useIsFocused();
+  const { API_URL } = process.env;
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
 
+  const fetchProducts = async () => {
+    const token = await AsyncStorage.getItem("token");
+    if (!token) return;
+    axios
+      .get(`${API_URL}/product/all`, {
+        headers: {
+          Authorization: "Bearer " + token,
+          "ngrok-skip-browser-warning": "69420",
+        },
+      })
+      .then((res) => {
+        setProducts(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, [isFocused]);
+
   return (
-    <View className="flex-1 bg-white min-h-screen">
+    <View className='flex-1 bg-white min-h-screen'>
       <Header toggleSidebar={toggleSidebar} />
-      <View className="flex-row">
-      <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
-      <ScrollView className="p-2 w-3/4">
-        <Text className="text-xl p-4 text-center">Products Page</Text>
-        <View className="flex-row flex-wrap justify-around items-center">
-          {/* Example products, you'll replace this with data fetched from your backend */}
-          <ProductCard title="Product 1" price="$20" color="bg-green-200" />
-          <ProductCard title="Product 2" price="$25" color="bg-blue-200" />
-          <ProductCard title="Product 3" price="$30" color="bg-yellow-200" />
-          <ProductCard title="Product 4" price="$35" color="bg-green-200" />
-        </View>
-      </ScrollView>
+      <View className='flex-1 flex-row'>
+        <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
+        <ScrollView className='p-2 w-3/4'>
+          <Text className='text-xl font-semibold px-4 text-center'>
+            Products Page
+          </Text>
+          <Text className='px-4 pb-4 font-light text-center'>
+            Order from a wide variety of products
+          </Text>
+          <View className='flex-row flex-wrap justify-between items-center'>
+            {/* Products List */}
+            {products.map((product, index) => (
+              <ProductCard
+                key={index}
+                title={product.name}
+                image={product.image}
+                price={product.price}
+                scale={product.scale}
+              />
+            ))}
+          </View>
+        </ScrollView>
       </View>
       <Navbar />
       <Footer />

@@ -66,7 +66,7 @@ export default function ValidateOTP({ navigation }) {
   return (
     <View className='flex-1 relative items-center justify-between bg-slate-400'>
       <Header />
-      <View className='flex flex-col space-y-4 items-center justify-center bg-white w-[70%] h-[50vh] border border-gray-300 rounded-md'>
+      <View className='flex flex-col space-y-4 items-center justify-center bg-white w-[80%] h-[50vh] border border-gray-300 rounded-md'>
         <Text className='text-lg'>Validate your OTP</Text>
         <Image
           source={require("../../assets/tngovt.png")}
