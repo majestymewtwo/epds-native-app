@@ -1,6 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
-import { Button, Text, View } from "react-native";
+import { Button, ScrollView, Text, View } from "react-native";
+import Hero from "../components/Hero";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import UserStats from "../components/UserStats";
+import Navbar from "../components/Navbar";
 
 export default function Home({ navigation }) {
   useEffect(() => {
@@ -9,16 +14,15 @@ export default function Home({ navigation }) {
     });
   }, []);
 
-  const logOut = () => {
-    AsyncStorage.removeItem("token").then(() => {
-      navigation.navigate("Login");
-    });
-  };
-
   return (
-    <View className='flex-1 items-center justify-center bg-white min-h-screen'>
-      <Text>This is Home Page</Text>
-      <Button title='Logout' onPress={logOut} />
+    <View className='flex-1 items-center justify-between bg-white min-h-screen'>
+      <Header />
+      <ScrollView className='p-2'>
+        <Hero />
+        <UserStats />
+      </ScrollView>
+      <Navbar />
+      <Footer />
     </View>
   );
 }
