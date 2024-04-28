@@ -7,6 +7,8 @@ import ValidateOTP from "./src/screens/OTP";
 import Products from "./src/screens/Products";
 import Cart from "./src/screens/Cart";
 import Orders from "./src/screens/Orders";
+import { RecoilRoot } from "recoil";
+import Toast from "react-native-toast-message";
 
 NativeWindStyleSheet.setOutput({
   default: "native",
@@ -21,39 +23,42 @@ const navigationOptions = {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ animation: "none" }}>
-        <Stack.Screen
-          name='Login'
-          options={navigationOptions}
-          component={Login}
-        />
-        <Stack.Screen
-          name='Validate'
-          options={navigationOptions}
-          component={ValidateOTP}
-        />
-        <Stack.Screen
-          name='Home'
-          options={navigationOptions}
-          component={Home}
-        />
-        <Stack.Screen
-          name='Products'
-          options={navigationOptions}
-          component={Products}
-        />
-        <Stack.Screen
-          name='Cart'
-          options={navigationOptions}
-          component={Cart}
-        />
-        <Stack.Screen
-          name='Orders'
-          options={navigationOptions}
-          component={Orders}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <RecoilRoot>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ animation: "none" }}>
+          <Stack.Screen
+            name='Login'
+            options={navigationOptions}
+            component={Login}
+          />
+          <Stack.Screen
+            name='Validate'
+            options={navigationOptions}
+            component={ValidateOTP}
+          />
+          <Stack.Screen
+            name='Home'
+            options={navigationOptions}
+            component={Home}
+          />
+          <Stack.Screen
+            name='Products'
+            options={navigationOptions}
+            component={Products}
+          />
+          <Stack.Screen
+            name='Cart'
+            options={navigationOptions}
+            component={Cart}
+          />
+          <Stack.Screen
+            name='Orders'
+            options={navigationOptions}
+            component={Orders}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+      <Toast />
+    </RecoilRoot>
   );
 }

@@ -9,16 +9,14 @@ import { useIsFocused } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import Toast from "react-native-toast-message";
+import { useSetRecoilState } from "recoil";
+import { CartAtom } from "../../atoms/Cart";
 
 const ProductsPage = () => {
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [products, setProducts] = useState([]);
+  const setCart = useSetRecoilState(CartAtom);
   const isFocused = useIsFocused();
   const { API_URL } = process.env;
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen);
-  };
 
   const fetchProducts = async () => {
     const token = await AsyncStorage.getItem("token");
@@ -53,6 +51,10 @@ const ProductsPage = () => {
         }
       )
       .then((res) => {
+        setCart((prev) => ({
+          ...prev,
+          fetching: true,
+        }));
         Toast.show({
           type: "success",
           text1: res.data,
@@ -70,9 +72,9 @@ const ProductsPage = () => {
 
   return (
     <View className='flex-1 bg-white min-h-screen'>
-      <Header toggleSidebar={toggleSidebar} />
+      <Header />
       <View className='flex-1 flex-row'>
-        <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
+        <Sidebar />
         <ScrollView className='p-2 w-3/4'>
           <Text className='text-xl font-semibold px-4 text-center'>
             Products Page
@@ -98,7 +100,6 @@ const ProductsPage = () => {
       </View>
       <Navbar />
       <Footer />
-      <Toast />
     </View>
   );
 };
