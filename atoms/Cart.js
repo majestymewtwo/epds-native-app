@@ -5,6 +5,7 @@ export const CartAtom = atom({
   default: {
     fetching: true,
     data: [],
+    total: 0,
   },
   dangerouslyAllowMutability: true,
 });

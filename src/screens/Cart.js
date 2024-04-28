@@ -91,10 +91,16 @@ const Cart = () => {
     <View className='flex-1 items-center justify-between bg-white min-h-screen'>
       <Header />
       <ScrollView className='p-2 flex-1 w-full'>
-        <Text className='text-xl font-semibold px-4 text-center'>My Cart</Text>
+        <Text className='text-xl font-semibold px-10'>My Cart</Text>
+        {cart.data.length > 0 && (
+          <Text className='text-base px-10'>
+            Subtotal : ₹{cart.total.toLocaleString()}
+          </Text>
+        )}
         {cart.data.length > 0 ? (
-          <View className='w-full flex items-center'>
+          <View className='w-full flex items-center mt-4'>
             {/* Products List */}
+
             {cart.data.map((product, index) => (
               <CartCard
                 key={index}

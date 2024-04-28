@@ -32,7 +32,8 @@ const Navbar = () => {
       .then((res) => {
         setCart({
           fetching: false,
-          data: res.data,
+          data: res.data.cart,
+          total: res.data.total,
         });
       })
       .catch((err) => {
