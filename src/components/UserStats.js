@@ -10,7 +10,7 @@ import { Text, View } from "react-native";
 
 const UserStats = () => {
   return (
-    <View className='mt-6 rounded-lg border-y border-gray-300 w-[95%] mx-auto'>
+    <View className='rounded-lg border-y border-gray-300 w-[95%] mx-auto'>
       <Text className='bg-yellow-600 text-white rounded-t-lg font-semibold text-lg p-4 '>
         Family Card Details
       </Text>
