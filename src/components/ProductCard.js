@@ -3,7 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 
-const ProductCard = ({ title, id, price, image, scale, onAddToCart }) => {
+const ProductCard = ({ title, id, price, image, scale, addToCart }) => {
+  const handleAddToCart = () => {
+    addToCart(id);
+  };
+
   return (
     <View className='bg-white m-1 rounded-lg w-[135px] border border-gray-200 shadow-lg'>
       <View className='w-full h-20 rounded-t-lg'>
@@ -23,7 +27,9 @@ const ProductCard = ({ title, id, price, image, scale, onAddToCart }) => {
           {scale}
         </Text>
         <View className='flex-row items-center mt-2'>
-          <TouchableOpacity className='border-yellow-600 border text-white px-2 py-1 rounded w-full justify-center flex flex-row items-center space-x-2'>
+          <TouchableOpacity
+            onPress={handleAddToCart}
+            className='border-yellow-600 border text-white px-2 py-1 rounded w-full justify-center flex flex-row items-center space-x-2'>
             <Text className='text-center text-yellow-600 font-extrabold'>
               ADD
             </Text>

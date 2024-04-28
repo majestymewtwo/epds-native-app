@@ -8,6 +8,7 @@ import Sidebar from "../components/ProductSidebar";
 import { useIsFocused } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import Toast from "react-native-toast-message";
 
 const ProductsPage = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -37,6 +38,32 @@ const ProductsPage = () => {
       });
   };
 
+  const addToCart = async (id) => {
+    const token = await AsyncStorage.getItem("token");
+    if (!id || !token) return;
+    axios
+      .post(
+        `${API_URL}/product/addToCart/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+            "ngrok-skip-browser-warning": "69420",
+          },
+        }
+      )
+      .then((res) => {
+        Toast.show({
+          type: "success",
+          text1: res.data,
+          swipeable: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     fetchProducts();
   }, [isFocused]);
@@ -58,10 +85,12 @@ const ProductsPage = () => {
             {products.map((product, index) => (
               <ProductCard
                 key={index}
+                id={product.id}
                 title={product.name}
                 image={product.image}
                 price={product.price}
                 scale={product.scale}
+                addToCart={addToCart}
               />
             ))}
           </View>
@@ -69,6 +98,7 @@ const ProductsPage = () => {
       </View>
       <Navbar />
       <Footer />
+      <Toast />
     </View>
   );
 };
