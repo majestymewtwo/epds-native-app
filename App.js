@@ -12,6 +12,8 @@ NativeWindStyleSheet.setOutput({
 const Stack = createNativeStackNavigator();
 const navigationOptions = {
   headerBackVisible: false,
+  gestureEnabled: false,
+  headerShown: false,
 };
 
 export default function App() {
