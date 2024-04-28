@@ -9,6 +9,7 @@ import Cart from "./src/screens/Cart";
 import Orders from "./src/screens/Orders";
 import { RecoilRoot } from "recoil";
 import Toast from "react-native-toast-message";
+import OrderSuccess from "./src/screens/OrderSuccess";
 
 NativeWindStyleSheet.setOutput({
   default: "native",
@@ -55,6 +56,11 @@ export default function App() {
             name='Orders'
             options={navigationOptions}
             component={Orders}
+          />
+          <Stack.Screen
+            name='OrderSuccess'
+            options={navigationOptions}
+            component={OrderSuccess}
           />
         </Stack.Navigator>
       </NavigationContainer>

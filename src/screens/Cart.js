@@ -13,7 +13,7 @@ import EmptyCart from "../components/EmptyCart";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faBasketShopping } from "@fortawesome/free-solid-svg-icons";
 
-const Cart = () => {
+const Cart = ({ navigation }) => {
   const [cart, setCart] = useRecoilState(CartAtom);
   const { API_URL } = process.env;
 
@@ -32,14 +32,11 @@ const Cart = () => {
         }
       )
       .then((res) => {
-        Toast.show({
-          type: "success",
-          text1: res.data,
-        });
         setCart({
           fetching: true,
           data: [],
         });
+        navigation.navigate("OrderSuccess");
       })
       .catch((err) => {
         console.log(err);
