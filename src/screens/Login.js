@@ -28,6 +28,7 @@ export default function Login({ navigation }) {
     axios
       .post(`${API_URL}/auth/getOTP/${phone}`)
       .then((res) => {
+        setPhone("");
         if (res.status === 200) navigation.navigate("Validate");
       })
       .catch((err) => {
@@ -35,7 +36,7 @@ export default function Login({ navigation }) {
           visible: true,
           message: "An error has occured, please try again later",
         });
-        console.error(err);
+        console.log(err);
       });
   };
 

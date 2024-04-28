@@ -38,14 +38,11 @@ export default function ValidateOTP({ navigation }) {
         });
       })
       .catch((err) => {
-        if (err.status === 401) {
-          setError({
-            visible: true,
-            message: "Invalid OTP",
-          });
-        } else {
-          console.error(err);
-        }
+        setError({
+          visible: true,
+          message: "Invalid OTP",
+        });
+        console.log(err);
       });
   };
 
